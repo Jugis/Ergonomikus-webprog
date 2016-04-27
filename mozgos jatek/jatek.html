@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8/>
+    <title>CLOCK</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <style>
+        td {
+            border: 1px solid black;
+            width: 20px;
+            height: 20px;
+        }
+        .black {
+            background-color: black;
+        }
+        .green {
+            background-color: green;
+        }
+        .blue {
+            background-color: blue;
+        }
+        .red {
+            background-color: red;
+        }
+        #szinek {
+            width: 250px;
+            height: 20px;
+            border: 1px solid black;
+        }
+        .szindobozok {
+            border: 1px solid black;
+            width: 50px;
+            height: 15px;
+            float: left;
+            margin: auto;
+        }
+        #kek {
+            background-color: blue;
+        }
+        #piros {
+            background-color: red;
+        }
+        #zold {
+            background-color: green;
+        }
+		.iranyitas {
+			width:400px;
+			height:200px;
+		}
+		.gomb {
+			width:90px;
+			height:190px;
+		}
+    </style>
+
+    <script>
+		var globI=0;
+		var globJ=0;
+		
+		
+        var $table = $('<table>');
+        var szin = 'black';
+        function createTable(selector) {
+            var i, j;
+            var $table = $('<table>');
+            for (i = 0; i < 8; i++) {
+                var $tr = $('<tr>');
+                for (j = 0; j < 8; j++) {
+                    $tr.append(
+                            $('<td>').click(
+                                    function (event) {
+                                        $(this).toggleClass(szin)
+                                    }
+                            ).attr('id', i + '' + j)
+                    );
+                }
+                $table.append($tr);
+            }
+            $(selector).append($table);
+        }
+        function changeClickEvent() {
+            var n, m;
+            var $kek = $('#kek');
+            $kek.click(
+                    function (event) {
+                        for (n = 0; n < 8; n++) {
+                            for (m = 0; m < 8; m++) {
+                                var $td = $('#' + n + '' + m).click(
+                                        function (event) {
+                                            $(this).toggleClass('blue')
+                                        }
+                                )
+                            }
+                        }
+                    }
+            )
+            var $zold = $('#zold');
+            $zold.click(
+                    function (event) {
+                        szin = 'green';
+                        //alert(szin);
+                    }
+            )
+            var $piros = $('#piros');
+            $piros.click(
+                    function (event) {
+                        szin = 'red';
+                        //alert(szin);
+                    }
+            )
+        }
+		
+		function step($button){
+			switch ($button.attr('direction')){
+				case 'bal':
+						if(globJ != 0){
+							kitorol();
+							globJ--;
+							ujrarajzol();
+						}
+					break;
+				case 'jobb':
+						if(globJ != 7){
+							kitorol();
+							globJ++;
+							ujrarajzol();
+						}
+					break;
+				case 'fel':
+						if(globI != 0){
+							kitorol();
+							globI--;
+							ujrarajzol();
+						}
+					
+					break;
+				case 'le':
+						if(globI != 7){
+							kitorol();
+							globI++;
+							ujrarajzol();
+						}
+					break;
+			}
+		}
+		
+		function kitorol(){
+			$('td[id=' + globI + "" + globJ + ']').css('background-image','').css('background-size','contain');	
+		}
+		
+		function ujrarajzol(){
+			//$('td[x="' + i + '"][y="' + j + '"]')
+			$('td[id=' + globI + "" + globJ + ']').css('background-image','url(lofasz.jpeg)').css('background-size','contain');	
+		}
+		
+		function kepFelrakas(){
+			$('td[id=00]').css('background-image','url(/lofasz.jpg)').css('background-size','contain');			
+			//$('myOjbect').css('background-image', 'url(' + imageUrl + ')');
+		}
+		
+		function createGombok(selector){
+			var $gombok = $(selector);
+				$balraGomb = $('<button id="balra">BAL</button>').attr('direction', 'bal').attr('class' , 'gomb').click(function(){step($(this))});
+				$jobbraGomb = $('<button id="jobbra">JOBB</button>').attr('direction', 'jobb').attr('class' , 'gomb').click(function(){step($(this))});
+				$felfeleGomb = $('<button id="felfele">FEL</button>').attr('direction', 'fel').attr('class' , 'gomb').click(function(){step($(this))});
+				$lefeleGomb = $('<button id="lefele">LE</button>').attr('direction', 'le').attr('class' , 'gomb').click(function(){step($(this))});
+				
+				
+				/*	
+				$load = $('<button id="load">load</button>').click(
+					function(){
+				load();
+					}
+				);
+				*/
+				$gombok.append($balraGomb);
+				$gombok.append($jobbraGomb);
+				$gombok.append($felfeleGomb);
+				$gombok.append($lefeleGomb);
+
+		}
+        window.onload = function () {
+            createTable('#tableholder');
+            changeClickEvent();
+			kepFelrakas();
+			createGombok('#iranyitoGombok');
+        }
+        //.click(function(){$(this).toggleClass('black');})
+    </script>
+
+
+</head>
+<body>
+<div id="tableholder"></div>
+Feladatok
+<ol>
+   
+</ol>
+<div id="szinek">
+    <div id="kek" class="szindobozok"></div>
+    <div id="piros" class="szindobozok"></div>
+    <div id="zold" class="szindobozok"></div>
+</div>
+
+<div id="iranyitoGombok" class="iranyitas"></div>
+
+</body>
+
+</html>

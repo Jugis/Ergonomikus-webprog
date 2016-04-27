@@ -1,0 +1,45 @@
+
+
+td{
+		border:1px solid black;
+		width: 20px;
+		height: 20px;
+}
+
+
+.c4 {
+	/*background: blue;*/
+}
+
+.zaszlo{
+	background-image: url('img/mark-mine.png');
+	background-size: contain;
+}
+
+.proba{
+	background-color: #1eff1e;
+}
+
+td[szam="1"][class="proba"] {
+	background-image: url('img/mark1.png');
+	background-size: contain;
+}
+td[szam="2"][class="proba"] {
+	background-image: url('img/mark2.png');
+	background-size: contain;
+}
+td[szam="3"][class="proba"] {
+	background-image: url('img/mark3.png');
+	background-size: contain;
+}
+td[szam="4"][class="proba"] {
+	background-image: url('img/mark4.png');
+	background-size: contain;
+}
+td[szam="5"][class="proba"] {
+	background-image: url('img/mark5.png');
+	background-size: contain;
+}
+
+
+

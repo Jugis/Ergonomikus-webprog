@@ -1,0 +1,100 @@
+
+<!doctype html>
+<html>
+<head>
+	<title>ASd</title>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="1000"></canvas>
+</body>
+
+<script>
+	window.onload = function () {
+		setInterval(ora, 1000);
+
+		function ora() {
+			var peldany = document.getElementById('canvas');
+			var ctx = peldany.getContext('2d');
+			var most = new Date;
+			var szog;
+			var masodPerc = 60;
+
+			ctx.clearRect(0, 0, peldany.width, peldany.height);
+			KulsoKor();
+			OrakatMutat();
+
+			Masodpercekk();
+			Percek();
+			Orak();
+
+
+			function KulsoKor() {
+				ctx.beginPath();
+				ctx.arc(peldany.width / 2, peldany.height / 2, masodPerc + 7, 0, Math.PI * 2);
+				ctx.stroke();
+			}
+
+			function OrakatMutat() {
+				for (var i = 0; i < 12; i++) {
+					szog = (i - 3) * (Math.PI * 2) / 12;
+					ctx.lineWidth = 1;
+					ctx.beginPath();
+					var x1 = (peldany.width / 2) + Math.cos(szog) * (masodPerc);
+					var y1 = (peldany.height / 2) + Math.sin(szog) * (masodPerc);
+					var x2 = (peldany.width / 2) + Math.cos(szog) * (masodPerc - (masodPerc / 7));
+					var y2 = (peldany.height / 2) + Math.sin(szog) * (masodPerc - (masodPerc / 7));
+					ctx.moveTo(x1, y1);
+					ctx.lineTo(x2, y2);
+					ctx.stroke();
+				}
+			}
+
+
+			function Masodpercekk() {
+				var sec = most.getSeconds();
+				szog = ((Math.PI * 2) * (sec / 60)) - ((Math.PI * 2) / 4);
+				ctx.lineWidth = 0.5;
+
+				ctx.beginPath();
+				ctx.moveTo(peldany.width / 2, peldany.height / 2);
+				ctx.lineTo((peldany.width / 2 + Math.cos(szog) * masodPerc),
+						peldany.height / 2 + Math.sin(szog) * masodPerc);
+
+				ctx.moveTo(peldany.width / 2, peldany.height / 2);
+
+				ctx.lineTo((peldany.width / 2 - Math.cos(szog) * 20),
+						peldany.height / 2 - Math.sin(szog) * 20);
+
+				ctx.stroke();
+			}
+
+			function Percek() {
+				var min = most.getMinutes();
+				szog = ((Math.PI * 2) * (min / 60)) - ((Math.PI * 2) / 4);
+				ctx.lineWidth = 1.5;
+
+				ctx.beginPath();
+				ctx.moveTo(peldany.width / 2, peldany.height / 2);
+				ctx.lineTo((peldany.width / 2 + Math.cos(szog) * masodPerc / 1.1),
+						peldany.height / 2 + Math.sin(szog) * masodPerc / 1.1);
+				ctx.stroke();
+			}
+
+			function Orak() {
+				var hour = most.getHours();
+				var min = most.getMinutes();
+				szog = ((Math.PI * 2) * ((hour * 5 + (min / 60) * 5) / 60)) - ((Math.PI * 2) / 4);
+				ctx.lineWidth = 1.5;
+
+				ctx.beginPath();
+				ctx.moveTo(peldany.width / 2, peldany.height / 2);
+				ctx.lineTo((peldany.width / 2 + Math.cos(szog) * masodPerc / 1.5),
+						peldany.height / 2 + Math.sin(szog) * masodPerc / 1.5);
+
+				ctx.stroke();
+			}
+		}
+	}
+</script>
+</html>
+
